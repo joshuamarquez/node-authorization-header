@@ -1,6 +1,6 @@
 # node-authorization-header
 
-[![npm version](https://badge.fury.io/js/authorization-header.svg)](https://badge.fury.io/js/authorization-header)
+[![npm version](https://badge.fury.io/js/authorization-header.svg)](https://badge.fury.io/js/authorization-header) [![Build Status](https://travis-ci.org/joshuamarquez/node-authorization-header.svg?branch=master)](https://travis-ci.org/joshuamarquez/node-authorization-header)
 
 Authorization Header middleware for Express and Sails.js
 
