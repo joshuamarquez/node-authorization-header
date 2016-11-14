@@ -1,8 +1,8 @@
 {
   "name": "authorization-header",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Authorization Header middleware for Express and Sails.js",
-  "main": "./lib/index/js",
+  "main": "./lib/index.js",
   "engines": {
     "node": ">=4.0.0"
   },
