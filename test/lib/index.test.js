@@ -26,6 +26,15 @@ describe('AuthorizationHeader', function() {
     })(req);
   });
 
+  it('should return error `E_AUTHORIZATION_REQUIRED` (callback provided)', function() {
+    let req = { req: {} };
+
+    authorizationHeader(function(err, req, res, next) {
+      assert(err);
+      assert.equal(err.code, 'E_AUTHORIZATION_REQUIRED');
+    })(req);
+  });
+
   it('should set "req.token" correctly (callback provided) using "Basic" type', function() {
     let req = getReq('Basic', token);
 
@@ -47,6 +56,37 @@ describe('AuthorizationHeader', function() {
       assert.ok(req[newKey]);
       assert.equal(token, req[newKey]);
     });
+  });
+
+  it('should set `compareTo` option', function() {
+    let req = getReq('Bearer', token);
+
+    authorizationHeader({
+      compareTo: token
+    })(req, null, function() {
+      assert.ok(req.token);
+      assert.equal(token, req.token);
+    });
+  });
+
+  it('should fail using `compareTo` option `E_AUTHORIZATION_INVALID_TOKEN`', function() {
+    let req = getReq('Bearer', token);
+    let res = getRes('E_AUTHORIZATION_INVALID_TOKEN');
+
+    authorizationHeader({
+      compareTo: 'invalid_token'
+    })(req, res);
+  });
+
+  it('should fail using `compareTo` option `E_AUTHORIZATION_INVALID_TOKEN` (callback provided)', function() {
+    let req = getReq('Bearer', token);
+
+    authorizationHeader({
+      compareTo: 'invalid_token'
+    }, function(err, req, res, next) {
+      assert(err);
+      assert.equal(err.code, 'E_AUTHORIZATION_INVALID_TOKEN');
+    })(req);
   });
 
   it('should return default attachTo key as undefined', function() {

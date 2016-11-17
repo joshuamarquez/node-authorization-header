@@ -20,6 +20,7 @@ $ npm install authorization-header --save
 
 * `type` The type of Authorization, e.g. `Bearer`, `Basic`, `Digest`, etc.
 * `attachTo` Where the token value extracted will be attach to, defaults to `token`.
+* `compareTo` This options allows user to pass a value to compare against the extracted `token`.
 
 ### Usage in Express
 
@@ -46,6 +47,20 @@ app.use(authorizationHeader({
 app.get('/', function(req, res) {
   res.send(req.apiKey);
 });
+```
+
+Usage of `compareTo` option.
+
+```javascript
+app.get('/', authorizationHeader({
+  compareTo: TOKEN_VALUE
+}, function(err, req, res, next) {
+  if (err) {
+    return res.status(401).send(err);
+  }
+
+  return res.send(`Your token is valid.`);
+}));
 ```
 
 ### Usage in Sails.js
@@ -82,6 +97,7 @@ Possible thrown errors
 | No Authorization header is present.                | `E_AUTHORIZATION_REQUIRED`           |
 | Formats should be `Authorization: <type> <token>`. | `E_AUTHORIZATION_INVALID_FORMAT`     |
 | Authorization of type `<type>` was expected.       | `E_AUTHORIZATION_INVALID_TYPE`       |
+| Token provided is invalid.                         | `E_AUTHORIZATION_INVALID_TOKEN`      |
 
 Suppose `E_AUTHORIZATION_INVALID_TYPE` error was thrown
 
